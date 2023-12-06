@@ -14,7 +14,7 @@
 }
 
 body {
-    min-height: 100vh;
+    min-height: 90vh;
     color: var(--text--color);
     background-color: var(--main--bg--color);
     flex-direction: column;
