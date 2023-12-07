@@ -70,10 +70,15 @@ function getCustomHeader() {
 // ------------------------------------------------------
 
 /* 
-3. Användaren kan ta borts länkar 
-(3a) samt lägga till nya 
+3. Användaren kan lägga till nya, samt ta borts länkar
 (3b). När användaren lägger till nya länkar ska användaren fylla i länken samt en rubrik som denna vill ska synas i dashboarden.
 */
     
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
 
+function addLinks() {
+    const addLinkBtn = document.getElementById('add-links-btn');
+    addLinkBtn.addEventListener('click', () => {
+        
+    });
+}

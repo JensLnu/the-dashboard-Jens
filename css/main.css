@@ -18,6 +18,7 @@
 .hover:hover {
     cursor: pointer;
     opacity: 0.7;
+    transition: 1s;
 }
 
 .display-none {
@@ -48,6 +49,7 @@ body {
 main {
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 h1,
@@ -101,11 +103,29 @@ h1,
     margin-left: auto;
 }
 
-.links-container button {
+button {
     background-color: var(--main--bg--color);
     margin-top: auto;
     padding: 0.2rem 2rem;
     border-radius: 0.4rem;
+}
+
+.link-modal {
+    background-color: var(--main--bg--color);
+    flex-direction: column;
+    gap: 0.5rem;
+    position: absolute;
+    top: 25%;
+    width: min-content;/* tillfällig */
+    height: 80%;/* tillfällig */
+    padding: 2rem;
+    border: 2px solid black;/* tillfällig */
+}
+
+.link-modal input, .link-modal button {
+    background-color: var(--main--bg--color);
+    color: var(--text--color);
+    padding: 0.2rem;
 }
 
 footer p {
