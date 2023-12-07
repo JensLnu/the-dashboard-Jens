@@ -49,14 +49,18 @@ main {
     align-items: center;
 }
 
-h1 {
+h1, #header-input {
     margin: 1rem;
 }
 
 #header-input {
-    border: none;
+    /* border: none; */
+    color: var(--text--color);
     background-color: var(--main--bg--color);
-    height: 2rem;
+    height: 3rem;
+    font-size: 2.5rem;
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 .gadgets-container {
