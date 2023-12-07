@@ -39,7 +39,8 @@ body {
 #time-and-date {
     list-style: none;
     gap: 2rem;
-    border: 2px solid black; /* tillfällig */
+    border: 2px solid black;
+    /* tillfällig */
     padding: 0.2rem 2rem;
     border-radius: 1rem;
 }
@@ -49,14 +50,15 @@ main {
     align-items: center;
 }
 
-h1, #header-input {
+h1,
+#header-input {
     margin: 1rem;
 }
 
 #header-input {
     /* border: none; */
-    color: var(--text--color);
     background-color: var(--main--bg--color);
+    color: var(--text--color);
     height: 3rem;
     font-size: 2.5rem;
     border-radius: 1rem;
@@ -68,9 +70,9 @@ h1, #header-input {
 }
 
 .gadgets {
-    width: 200px; /* tillfällig */
-    height: 300px; /* tillfällig */
-    border: 2px solid black; /* tillfällig */
+    width: 200px;/* tillfällig */
+    height: 300px;/* tillfällig */
+    border: 2px solid black;/* tillfällig */
 
     border-radius: 1rem;
     padding: 1rem;
@@ -80,15 +82,35 @@ h1, #header-input {
     flex-direction: column;
 }
 
-.links-container button{
+.link {
+    list-style: none;
+    /* border: 2px solid black; */
+}
+
+.link li {
+    border: 2px solid black;/* tillfällig */
+    height: 3rem;
+    padding: 0.2rem;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.4rem;
+}
+
+#close-tag {
+    align-self: start;
+    margin-left: auto;
+}
+
+.links-container button {
     background-color: var(--main--bg--color);
     margin-top: auto;
     padding: 0.2rem 2rem;
     border-radius: 0.4rem;
 }
 
-footer p { /* tillfällig */
-    border: 2px solid black; 
+footer p {
+    /* tillfällig */
+    border: 2px solid black;
     padding: 0.2rem 2rem;
     border-radius: 1rem;
 }

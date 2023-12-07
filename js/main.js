@@ -13,6 +13,10 @@ function addFunctionality() {
     changeHeader();
 }
 
+// -------------------------------------------------------
+// -------------------- Time and date --------------------
+// -------------------------------------------------------
+
 // gets the time and render it
 function showClock() {
     const timePlaceholder = document.querySelector('#time-and-date li');
@@ -30,6 +34,10 @@ function showDate() {
     ];
     datePlaceholder.textContent = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
+
+// ---------------------------------------------------------
+// -------------------- Changing header --------------------
+// ---------------------------------------------------------
 
 // enabel the main header to be changed by the user
 function changeHeader() {
@@ -51,15 +59,21 @@ function saveNewHeader(e) {
     }
 }
 
-// gets the saved header and renders it
+// gets the saved customaized header and renders it
 function getCustomHeader() {
     const customHeader = localStorage.getItem('customHeader');
     if (customHeader) header.textContent = customHeader;
 }
 
-/* 3. Denna del innehåller länkar som användaren sparat. Användaren kan ta borts länkar 
+// ------------------------------------------------------
+// -------------------- Adding links --------------------
+// ------------------------------------------------------
+
+/* 
+3. Användaren kan ta borts länkar 
 (3a) samt lägga till nya 
-(3b). När användaren lägger till nya länkar ska användaren fylla i länken samt en rubrik som denna vill ska synas i dashboarden. */
+(3b). När användaren lägger till nya länkar ska användaren fylla i länken samt en rubrik som denna vill ska synas i dashboarden.
+*/
     
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
 
