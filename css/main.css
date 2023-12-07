@@ -84,12 +84,12 @@ h1,
     flex-direction: column;
 }
 
-.link {
+.link-ul {
     list-style: none;
     /* border: 2px solid black; */
 }
 
-.link li {
+.link-ul li {
     border: 2px solid black;/* tillfällig */
     height: 3rem;
     padding: 0.2rem;

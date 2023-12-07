@@ -75,10 +75,43 @@ function getCustomHeader() {
 */
     
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
+const linkModal = document.querySelector('.link-modal');
+const inputLinkName = document.getElementById('link-name');
+const inputLinkUrl = document.getElementById('link-url');
+const submitLink = document.getElementById('link-submit-btn');
+const linkUl = document.querySelector('.link-ul');
 
-function addLinks() {
+getLinkfromUser();
+
+function getLinkfromUser() {
     const addLinkBtn = document.getElementById('add-links-btn');
     addLinkBtn.addEventListener('click', () => {
-        
+        linkModal.classList.toggle('display-none');
+        submitLink.addEventListener('click', createLink);
     });
+}
+
+function createLink() {
+    console.log('start creatLink')
+    const newUl = createNewElem('ul', null, null);
+    console.log(newUl)
+    const newLi = createNewElem('li', null, linkUl);
+    createNewElem('i', 'bild', newLi);
+    createNewElem('p', inputLinkName.value, newLi);
+    createNewElem('i', 'close', newLi);
+    submitLink.addEventListener('click', addLink);
+}
+
+// creates an element with content and adds it to its parent
+function createNewElem(elem, content, appendTo) {
+    console.log('start createNewElem')
+    console.log(appendTo)
+    const newElem = document.createElement(elem);
+    newElem.textContent = content;
+    appendTo.appendChild(newElem);
+}
+
+function addLink() {
+    console.log('start addLink')
+    linkModal.classList.toggle('display-none');
 }
