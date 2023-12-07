@@ -1,5 +1,6 @@
 // references
 const header = document.querySelector('.header');
+const linksContainer = document.querySelector('.links-container')
 
 document.addEventListener("DOMContentLoaded", addFunctionality);
 
@@ -19,7 +20,7 @@ function showClock() {
     timePlaceholder.textContent = date.toLocaleTimeString();
 }
 
-// gets the date and render it
+// gets the date and renders it
 function showDate() {
     const datePlaceholder = document.querySelector('#time-and-date li').nextElementSibling;
     const date = new Date;
@@ -55,3 +56,10 @@ function getCustomHeader() {
     const customHeader = localStorage.getItem('customHeader');
     if (customHeader) header.textContent = customHeader;
 }
+
+/* 3. Denna del innehåller länkar som användaren sparat. Användaren kan ta borts länkar 
+(3a) samt lägga till nya 
+(3b). När användaren lägger till nya länkar ska användaren fylla i länken samt en rubrik som denna vill ska synas i dashboarden. */
+    
+// Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
+

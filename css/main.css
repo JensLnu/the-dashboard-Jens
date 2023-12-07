@@ -76,6 +76,17 @@ h1, #header-input {
     padding: 1rem;
 }
 
+.links-container {
+    flex-direction: column;
+}
+
+.links-container button{
+    background-color: var(--main--bg--color);
+    margin-top: auto;
+    padding: 0.2rem 2rem;
+    border-radius: 0.4rem;
+}
+
 footer p { /* tillfällig */
     border: 2px solid black; 
     padding: 0.2rem 2rem;
