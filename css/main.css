@@ -98,7 +98,7 @@ h1,
     border-radius: 0.4rem;
 }
 
-#close-tag {
+.close-tag {
     align-self: start;
     margin-left: auto;
 }

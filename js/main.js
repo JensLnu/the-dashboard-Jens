@@ -11,6 +11,7 @@ function addFunctionality() {
     setInterval(showClock, 1000);
     getCustomHeader();
     changeHeader();
+    getLinkfromUser();
 }
 
 // -------------------------------------------------------
@@ -76,12 +77,10 @@ function getCustomHeader() {
     
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
 const linkModal = document.querySelector('.link-modal');
-const inputLinkName = document.getElementById('link-name');
 const inputLinkUrl = document.getElementById('link-url');
 const submitLink = document.getElementById('link-submit-btn');
 const linkUl = document.querySelector('.link-ul');
 
-getLinkfromUser();
 
 function getLinkfromUser() {
     const addLinkBtn = document.getElementById('add-links-btn');
@@ -91,27 +90,37 @@ function getLinkfromUser() {
     });
 }
 
+// render user input and creates link template, enabels user to remove link
 function createLink() {
     console.log('start creatLink')
-    const newUl = createNewElem('ul', null, null);
-    console.log(newUl)
-    const newLi = createNewElem('li', null, linkUl);
-    createNewElem('i', 'bild', newLi);
-    createNewElem('p', inputLinkName.value, newLi);
-    createNewElem('i', 'close', newLi);
-    submitLink.addEventListener('click', addLink);
+    const inputLinkName = document.getElementById('link-name');
+    createNewElemAndClass('li', null, linkUl, 'flex');
+    createNewElemAndClass('i', 'bild', linkUl.lastElementChild);
+    createNewElemAndClass('p', inputLinkName.value, linkUl.lastElementChild);
+    createNewElemAndClass('i', 'close', linkUl.lastElementChild, 'close-tag', 'hover');
+    const closeTags = document.querySelectorAll('.close-tag');
+    closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
+        e.target.parentElement.remove();
+        // removeLink(e);
+    }));
+    linkModal.classList.toggle('display-none');
+    // addLink();
 }
 
-// creates an element with content and adds it to its parent
-function createNewElem(elem, content, appendTo) {
+// creates an element with content and adds classes then adds it to its parent
+function createNewElemAndClass(elem, content, appendTo, className1, className2) {
     console.log('start createNewElem')
-    console.log(appendTo)
     const newElem = document.createElement(elem);
     newElem.textContent = content;
+    newElem.classList.add(className1, className2);
     appendTo.appendChild(newElem);
 }
 
-function addLink() {
-    console.log('start addLink')
-    linkModal.classList.toggle('display-none');
-}
+// function addLink() {
+//     console.log('start addLink')
+// }
+
+// function removeLink(e) {
+//     console.log('start removeLink')
+//     e.target.parentElement.remove();
+// }
