@@ -70,11 +70,6 @@ function getCustomHeader() {
 // -------------------- Adding links --------------------
 // ------------------------------------------------------
 
-/* 
-3. Användaren kan lägga till nya, samt ta borts länkar
-(3b). När användaren lägger till nya länkar ska användaren fylla i länken samt en rubrik som denna vill ska synas i dashboarden.
-*/
-
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
 const linkModal = document.querySelector('.link-modal');
 const inputLinkUrl = document.getElementById('link-url');
@@ -91,9 +86,7 @@ function getLinkfromUser() {
     const addLinkBtn = document.getElementById('add-links-btn');
     addLinkBtn.addEventListener('click', () => {
         linkModal.classList.toggle('display-none');
-        submitLink.addEventListener('click', () => {
-            checkUserInputs(inputLinkUrl.value);
-        });
+        submitLink.addEventListener('click', checkUserInputs);
     });
 }
 
@@ -126,21 +119,22 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
 }
 
 // controll of userers input for valid URL and resets inputfields
-async function checkUserInputs(userUrlInput) {
+async function checkUserInputs() {
     const messageElem = linkModal.querySelector('p');
     if (inputLinkName.value === '') {
         inputLinkName.value = 'Enter a name..';
         inputLinkName.focus();
         return
     }
-    if (userUrlInput == '') {
+    if (inputLinkUrl.value == '') {
         inputLinkUrl.value = 'You must enter a url..';
         inputLinkUrl.focus();
         return;
     }
     try {
-        await fetch(`http://${userUrlInput}`, { mode: 'no-cors' });
+        await fetch(`http://${inputLinkUrl.value}`, { mode: 'no-cors' });
         messageElem.textContent = 'i.e "google.com"';
+        submitLink.removeEventListener('click', checkUserInputs);
         createLink();
         inputLinkUrl.value = '';
         inputLinkName.value = '';
