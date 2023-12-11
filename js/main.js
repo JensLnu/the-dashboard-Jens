@@ -77,7 +77,7 @@ const submitLink = document.getElementById('link-submit-btn');
 const linkUl = document.querySelector('.link-ul');
 const inputLinkName = document.getElementById('link-name');
 
-
+// adds save link functionallity
 function getLinkfromUser() {
     const closeLinkModal = document.querySelector('.close-link-modal');
     closeLinkModal.addEventListener('click', () => {
