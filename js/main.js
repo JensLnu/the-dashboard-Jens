@@ -97,7 +97,8 @@ function createLink(UsersLinkName, UsersLinkUrl) {
     createNewElemAndClass('a', null, linkUl.lastElementChild);
     createNewElemAndClass('i', 'bild', linkUl.lastElementChild);
     createNewElemAndClass('p', UsersLinkName, linkUl.lastElementChild);
-    createNewElemAndClass('i', 'close', linkUl.lastElementChild, 'close-tag', 'hover');
+    createNewElemAndClass('i', '', linkUl.lastElementChild, 'close-tag', 'hover');
+    linkUl.lastElementChild.querySelector('.close-tag').innerHTML = '&times;'; // only for not using innerHTML from an input field
     const aElem = linkUl.lastElementChild.querySelector('a');
     aElem.setAttribute('href', `http://${UsersLinkUrl}`);
     aElem.setAttribute('target', '_blank');
