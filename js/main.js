@@ -71,11 +71,10 @@ function getCustomHeader() {
 // ------------------------------------------------------
 
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
+// gör om 'close' till ett kryss
+
 const linkModal = document.querySelector('.link-modal');
-const inputLinkUrl = document.getElementById('link-url');
 const submitLink = document.getElementById('link-submit-btn');
-const linkUl = document.querySelector('.link-ul');
-const inputLinkName = document.getElementById('link-name');
 
 // adds save link functionallity
 function getLinkfromUser() {
@@ -91,15 +90,16 @@ function getLinkfromUser() {
 }
 
 // render user input and creates link template, enabels user to remove link
-function createLink() {
+function createLink(UsersLinkName, UsersLinkUrl) {
     console.log('start creatLink')
+    const linkUl = document.querySelector('.link-ul');
     createNewElemAndClass('li', null, linkUl, 'flex');
     createNewElemAndClass('a', null, linkUl.lastElementChild);
     createNewElemAndClass('i', 'bild', linkUl.lastElementChild);
-    createNewElemAndClass('p', inputLinkName.value, linkUl.lastElementChild);
+    createNewElemAndClass('p', UsersLinkName, linkUl.lastElementChild);
     createNewElemAndClass('i', 'close', linkUl.lastElementChild, 'close-tag', 'hover');
     const aElem = linkUl.lastElementChild.querySelector('a');
-    aElem.setAttribute('href', `http://${inputLinkUrl.value}`);
+    aElem.setAttribute('href', `http://${UsersLinkUrl}`);
     aElem.setAttribute('target', '_blank');
     const closeTags = document.querySelectorAll('.close-tag');
     closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
@@ -120,6 +120,8 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
 
 // controll of userers input for valid URL and resets inputfields
 async function checkUserInputs() {
+    const inputLinkName = document.getElementById('link-name');
+    const inputLinkUrl = document.getElementById('link-url');
     const messageElem = linkModal.querySelector('p');
     if (inputLinkName.value === '') {
         inputLinkName.value = 'Enter a name..';
@@ -135,7 +137,7 @@ async function checkUserInputs() {
         await fetch(`http://${inputLinkUrl.value}`, { mode: 'no-cors' });
         messageElem.textContent = 'i.e "google.com"';
         submitLink.removeEventListener('click', checkUserInputs);
-        createLink();
+        createLink(inputLinkName.value, inputLinkUrl.value);
         inputLinkUrl.value = '';
         inputLinkName.value = '';
     } catch (error) {
