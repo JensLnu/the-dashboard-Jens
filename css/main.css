@@ -130,6 +130,13 @@ button {
     border: 2px solid black;/* tillfällig */
 }
 
+.close-link-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.2rem;
+}
+
 .link-modal input, .link-modal button {
     background-color: var(--main--bg--color);
     color: var(--text--color);

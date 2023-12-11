@@ -84,6 +84,10 @@ const inputLinkName = document.getElementById('link-name');
 
 
 function getLinkfromUser() {
+    const closeLinkModal = document.querySelector('.close-link-modal');
+    closeLinkModal.addEventListener('click', () => {
+        linkModal.classList.toggle('display-none');
+    });
     const addLinkBtn = document.getElementById('add-links-btn');
     addLinkBtn.addEventListener('click', () => {
         linkModal.classList.toggle('display-none');
