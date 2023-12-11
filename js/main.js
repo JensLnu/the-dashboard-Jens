@@ -86,7 +86,10 @@ function getLinkfromUser() {
     const addLinkBtn = document.getElementById('add-links-btn');
     addLinkBtn.addEventListener('click', () => {
         linkModal.classList.toggle('display-none');
-        submitLink.addEventListener('click', createLink);
+        submitLink.addEventListener('click', () => {
+            checkValidUrl();
+            createLink();
+        });
     });
 }
 
@@ -95,9 +98,13 @@ function createLink() {
     console.log('start creatLink')
     const inputLinkName = document.getElementById('link-name');
     createNewElemAndClass('li', null, linkUl, 'flex');
+    createNewElemAndClass('a', null, linkUl.lastElementChild);
     createNewElemAndClass('i', 'bild', linkUl.lastElementChild);
     createNewElemAndClass('p', inputLinkName.value, linkUl.lastElementChild);
     createNewElemAndClass('i', 'close', linkUl.lastElementChild, 'close-tag', 'hover');
+    const aElem = linkUl.lastElementChild.querySelector('a');
+    aElem.setAttribute('href', inputLinkUrl.value);
+    aElem.setAttribute('target', '_blank');
     const closeTags = document.querySelectorAll('.close-tag');
     closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
         e.target.parentElement.remove();
@@ -112,9 +119,12 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
     console.log('start createNewElem')
     const newElem = document.createElement(elem);
     newElem.textContent = content;
-    newElem.classList.add(className1, className2);
+    if (className1 !== undefined) newElem.classList.add(className1);
+    if (className2 !== undefined) newElem.classList.add(className2);
     appendTo.appendChild(newElem);
 }
+
+function
 
 // function addLink() {
 //     console.log('start addLink')
