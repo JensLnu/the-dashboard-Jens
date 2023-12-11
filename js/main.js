@@ -74,12 +74,13 @@ function getCustomHeader() {
 3. Användaren kan lägga till nya, samt ta borts länkar
 (3b). När användaren lägger till nya länkar ska användaren fylla i länken samt en rubrik som denna vill ska synas i dashboarden.
 */
-    
+
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
 const linkModal = document.querySelector('.link-modal');
 const inputLinkUrl = document.getElementById('link-url');
 const submitLink = document.getElementById('link-submit-btn');
 const linkUl = document.querySelector('.link-ul');
+const inputLinkName = document.getElementById('link-name');
 
 
 function getLinkfromUser() {
@@ -87,8 +88,7 @@ function getLinkfromUser() {
     addLinkBtn.addEventListener('click', () => {
         linkModal.classList.toggle('display-none');
         submitLink.addEventListener('click', () => {
-            checkValidUrl();
-            createLink();
+            checkUserInputs(inputLinkUrl.value);
         });
     });
 }
@@ -96,22 +96,19 @@ function getLinkfromUser() {
 // render user input and creates link template, enabels user to remove link
 function createLink() {
     console.log('start creatLink')
-    const inputLinkName = document.getElementById('link-name');
     createNewElemAndClass('li', null, linkUl, 'flex');
     createNewElemAndClass('a', null, linkUl.lastElementChild);
     createNewElemAndClass('i', 'bild', linkUl.lastElementChild);
     createNewElemAndClass('p', inputLinkName.value, linkUl.lastElementChild);
     createNewElemAndClass('i', 'close', linkUl.lastElementChild, 'close-tag', 'hover');
     const aElem = linkUl.lastElementChild.querySelector('a');
-    aElem.setAttribute('href', inputLinkUrl.value);
+    aElem.setAttribute('href', `http://${inputLinkUrl.value}`);
     aElem.setAttribute('target', '_blank');
     const closeTags = document.querySelectorAll('.close-tag');
     closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
         e.target.parentElement.remove();
-        // removeLink(e);
     }));
     linkModal.classList.toggle('display-none');
-    // addLink();
 }
 
 // creates an element with content and adds classes then adds it to its parent
@@ -124,13 +121,27 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
     appendTo.appendChild(newElem);
 }
 
-function
-
-// function addLink() {
-//     console.log('start addLink')
-// }
-
-// function removeLink(e) {
-//     console.log('start removeLink')
-//     e.target.parentElement.remove();
-// }
+// controll of userers input for valid URL and resets inputfields
+async function checkUserInputs(userUrlInput) {
+    const messageElem = linkModal.querySelector('p');
+    if (inputLinkName.value === '') {
+        inputLinkName.value = 'Enter a name..';
+        inputLinkName.focus();
+        return
+    }
+    if (userUrlInput == '') {
+        inputLinkUrl.value = 'You must enter a url..';
+        inputLinkUrl.focus();
+        return;
+    }
+    try {
+        await fetch(`http://${userUrlInput}`, { mode: 'no-cors' });
+        messageElem.textContent = 'i.e "google.com"';
+        createLink();
+        inputLinkUrl.value = '';
+        inputLinkName.value = '';
+    } catch (error) {
+        messageElem.innerHTML = 'i.e "google.com"<br>Invalid url, check your spelling and format!';
+        inputLinkUrl.focus();
+    }
+}
