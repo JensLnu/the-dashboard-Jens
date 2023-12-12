@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
+
 <body class="flex">
     <header>
         <ul id="time-and-date" class="flex">
@@ -16,15 +19,14 @@
     <main class="flex">
         <div class="hover">
             <h1 class="header">Jens Dashboard</h1>
-            <input type="text" name="" id="header-input" class="hover display-none">
+            <input type="text" id="header-input" class="hover display-none">
         </div>
         <div class="gadgets-container flex">
             <div class="gadgets links-container flex">
                 <h2>Links</h2>
-                <div class="links">
-                    
-                </div>
-                <button>Add link</button>
+                <ul class="link-ul flex">
+                </ul>
+                <button class="hover" id="add-links-btn">Add link</button>
             </div>
             <div class="gadgets">
                 <h2>Todays weather</h2>
@@ -36,6 +38,17 @@
                 <h2>Notes</h2>
             </div>
         </div>
+        <!-- modal -->
+        <div class="link-modal flex display-none">
+            <i class="close-link-modal hover">&times;</i>
+            <h3>Add a link</h3>
+            <label for="link-name">Name on your link</label>
+            <input type="text" name="link-name" id="link-name">
+            <label for="link-url">Url to site</label>
+            <input type="text" name="link-url" id="link-url">
+            <p>i.e "google.com"</p>
+            <button class="hover" id="link-submit-btn">Submit link</button>
+        </div>
     </main>
     <footer>
         <p>slumpa ny bakgrund</p>
@@ -43,4 +56,5 @@
     <!-- script -->
     <script src="js/main.js"></script>
 </body>
+
 </html>
