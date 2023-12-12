@@ -5,15 +5,13 @@ const linksContainer = document.querySelector('.links-container');
 // global varibles
 let linkInfos = [];
 
-console.log(linkInfos)
-
 document.addEventListener("DOMContentLoaded", addFunctionality);
 
 // runs sites main functionality
 function addFunctionality() {
     showClock();
     showDate();
-    setInterval(showClock, 1000);
+    // setInterval(showClock, 1000); /* stoped clock */
     getCustomHeader();
     changeHeader();
     getLinkfromUser();
@@ -110,9 +108,8 @@ function createLink(UsersLinkName, UsersLinkUrl) {
     aElem.setAttribute('target', '_blank');
     const closeTags = document.querySelectorAll('.close-tag');
     closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
-        // remove from localStorage
+        e.target.parentElement.remove();
         removeUsersLink(e);
-        //e.target.parentElement.remove();
     }));
     linkModal.classList.add('display-none');
 }
@@ -126,7 +123,7 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
     appendTo.appendChild(newElem);
 }
 
-// controll of userers input for valid URL and resets inputfields
+// control of userers input for valid url and resets inputfields
 async function checkUserInputs() {
     const inputLinkName = document.getElementById('link-name');
     const inputLinkUrl = document.getElementById('link-url');
@@ -181,7 +178,7 @@ function removeUsersLink(e) {
     linksFromLocalStorages = linksFromLocalStorages.filter(link => {
         return link.linkUrl != urlToRemove;
     })
-    
+    linkInfos = [];
     linksFromLocalStorages.forEach(link => {
         saveUsersLink(link.linkName, link.linkUrl);
     })

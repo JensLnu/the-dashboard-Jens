@@ -85,8 +85,11 @@ h1,
 }
 
 .link-ul {
+    flex-direction: column;
     list-style: none;
-    /* border: 2px solid black; */
+    /* border: 2px solid black; tillfällig */
+    gap: 0.5rem;
+    overflow: scroll;
 }
 
 .link-ul li {
@@ -101,18 +104,20 @@ h1,
 
 .link-ul a {
     position: absolute;
-    width: 100%;
+    width: 90%;
     height: 100%;
 }
 
 .close-tag {
     align-self: start;
     margin-left: auto;
+    margin-right: 0.5rem;
     z-index: 1;
 }
 
 button {
     background-color: var(--main--bg--color);
+    color: var(--text--color);
     margin-top: auto;
     padding: 0.2rem 2rem;
     border-radius: 0.4rem;
@@ -138,8 +143,6 @@ button {
 }
 
 .link-modal input, .link-modal button {
-    background-color: var(--main--bg--color);
-    color: var(--text--color);
     padding: 0.2rem;
 }
 
