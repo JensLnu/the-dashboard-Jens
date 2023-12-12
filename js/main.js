@@ -85,11 +85,12 @@ function getLinkfromUser() {
     getUsersLink(); 
     const closeLinkModal = document.querySelector('.close-link-modal');
     closeLinkModal.addEventListener('click', () => {
-        linkModal.classList.toggle('display-none');
+        console.log('körs detta dirr?')
+        linkModal.classList.add('display-none');
     });
     const addLinkBtn = document.getElementById('add-links-btn');
     addLinkBtn.addEventListener('click', () => {
-        linkModal.classList.toggle('display-none');
+        linkModal.classList.remove('display-none');
         submitLink.addEventListener('click', checkUserInputs);
     });
 }
@@ -105,19 +106,19 @@ function createLink(UsersLinkName, UsersLinkUrl) {
     createNewElemAndClass('i', '', linkUl.lastElementChild, 'close-tag', 'hover');
     linkUl.lastElementChild.querySelector('.close-tag').innerHTML = '&times;'; // only for not using innerHTML from an input field
     const aElem = linkUl.lastElementChild.querySelector('a');
-    aElem.setAttribute('href', `http://${UsersLinkUrl}`);
+    aElem.setAttribute('href', UsersLinkUrl);
     aElem.setAttribute('target', '_blank');
     const closeTags = document.querySelectorAll('.close-tag');
     closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
         // remove from localStorage
-        e.target.parentElement.remove();
+        removeUsersLink(e);
+        //e.target.parentElement.remove();
     }));
-    linkModal.classList.toggle('display-none');
+    linkModal.classList.add('display-none');
 }
 
 // creates an element with content and adds classes then adds it to its parent
 function createNewElemAndClass(elem, content, appendTo, className1, className2) {
-    console.log('start createNewElem')
     const newElem = document.createElement(elem);
     newElem.textContent = content;
     if (className1 !== undefined) newElem.classList.add(className1);
@@ -144,8 +145,8 @@ async function checkUserInputs() {
         await fetch(`http://${inputLinkUrl.value}`, { mode: 'no-cors' });
         messageElem.textContent = 'i.e "google.com"';
         submitLink.removeEventListener('click', checkUserInputs);
-        saveUsersLink(inputLinkName.value, inputLinkUrl.value);
-        createLink(inputLinkName.value, inputLinkUrl.value);
+        saveUsersLink(inputLinkName.value, `http://${inputLinkUrl.value}`);
+        createLink(inputLinkName.value, `http://${inputLinkUrl.value}`);
         inputLinkUrl.value = '';
         inputLinkName.value = '';
     } catch (error) {
@@ -166,12 +167,22 @@ function getUsersLink() {
     console.log('start getUsersLink')
     const checkValues = JSON.parse(localStorage.getItem('linkInfo') || 'null');
     if (checkValues === null) return;
+    linkInfos = checkValues;
     checkValues.forEach(linkInfo => {
         createLink(linkInfo.linkName, linkInfo.linkUrl);
     });
 }
 
 // removes users links from localStorage
-function removeUsersLink() {
-
+function removeUsersLink(e) {
+    console.log('start removeUsersLink');
+    const urlToRemove = e.target.parentNode.firstElementChild.getAttribute('href'); // url
+    let linksFromLocalStorages = JSON.parse(localStorage.getItem('linkInfo'));
+    linksFromLocalStorages = linksFromLocalStorages.filter(link => {
+        return link.linkUrl != urlToRemove;
+    })
+    
+    linksFromLocalStorages.forEach(link => {
+        saveUsersLink(link.linkName, link.linkUrl);
+    })
 }
