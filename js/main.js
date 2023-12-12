@@ -1,6 +1,11 @@
 // references
 const header = document.querySelector('.header');
-const linksContainer = document.querySelector('.links-container')
+const linksContainer = document.querySelector('.links-container');
+
+// global varibles
+let linkInfos = [];
+
+console.log(linkInfos)
 
 document.addEventListener("DOMContentLoaded", addFunctionality);
 
@@ -71,13 +76,13 @@ function getCustomHeader() {
 // ------------------------------------------------------
 
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
-// gör om 'close' till ett kryss
 
 const linkModal = document.querySelector('.link-modal');
 const submitLink = document.getElementById('link-submit-btn');
 
-// adds save link functionallity
+// enables save link functionallity
 function getLinkfromUser() {
+    getUsersLink(); 
     const closeLinkModal = document.querySelector('.close-link-modal');
     closeLinkModal.addEventListener('click', () => {
         linkModal.classList.toggle('display-none');
@@ -95,7 +100,7 @@ function createLink(UsersLinkName, UsersLinkUrl) {
     const linkUl = document.querySelector('.link-ul');
     createNewElemAndClass('li', null, linkUl, 'flex');
     createNewElemAndClass('a', null, linkUl.lastElementChild);
-    createNewElemAndClass('i', 'bild', linkUl.lastElementChild);
+    createNewElemAndClass('i', 'img', linkUl.lastElementChild);
     createNewElemAndClass('p', UsersLinkName, linkUl.lastElementChild);
     createNewElemAndClass('i', '', linkUl.lastElementChild, 'close-tag', 'hover');
     linkUl.lastElementChild.querySelector('.close-tag').innerHTML = '&times;'; // only for not using innerHTML from an input field
@@ -104,6 +109,7 @@ function createLink(UsersLinkName, UsersLinkUrl) {
     aElem.setAttribute('target', '_blank');
     const closeTags = document.querySelectorAll('.close-tag');
     closeTags.forEach(closeTag => closeTag.addEventListener('click', (e) => {
+        // remove from localStorage
         e.target.parentElement.remove();
     }));
     linkModal.classList.toggle('display-none');
@@ -138,6 +144,7 @@ async function checkUserInputs() {
         await fetch(`http://${inputLinkUrl.value}`, { mode: 'no-cors' });
         messageElem.textContent = 'i.e "google.com"';
         submitLink.removeEventListener('click', checkUserInputs);
+        saveUsersLink(inputLinkName.value, inputLinkUrl.value);
         createLink(inputLinkName.value, inputLinkUrl.value);
         inputLinkUrl.value = '';
         inputLinkName.value = '';
@@ -145,4 +152,26 @@ async function checkUserInputs() {
         messageElem.innerHTML = 'i.e "google.com"<br>Invalid url, check your spelling and format!';
         inputLinkUrl.focus();
     }
+}
+
+// saves users added links to localStorage
+function saveUsersLink(UsersLinkName, UsersLinkUrl) {
+    console.log('start saveUsersLink')
+    linkInfos.push({"linkName": UsersLinkName, "linkUrl": UsersLinkUrl});
+    localStorage.setItem('linkInfo', JSON.stringify(linkInfos));
+};
+
+// gets users links from localStorage
+function getUsersLink() {
+    console.log('start getUsersLink')
+    const checkValues = JSON.parse(localStorage.getItem('linkInfo') || 'null');
+    if (checkValues === null) return;
+    checkValues.forEach(linkInfo => {
+        createLink(linkInfo.linkName, linkInfo.linkUrl);
+    });
+}
+
+// removes users links from localStorage
+function removeUsersLink() {
+
 }
