@@ -152,6 +152,10 @@ async function checkUserInputs() {
     }
 }
 
+// -------------------------------------------------------
+// ------------- Links LocalStorage handling -------------
+// -------------------------------------------------------
+
 // saves users added links to localStorage
 function saveUsersLink(UsersLinkName, UsersLinkUrl) {
     console.log('start saveUsersLink')
@@ -183,3 +187,7 @@ function removeUsersLink(e) {
         saveUsersLink(link.linkName, link.linkUrl);
     })
 }
+
+// -------------------------------------------------------
+// ------------- Links LocalStorage handling -------------
+// -------------------------------------------------------
