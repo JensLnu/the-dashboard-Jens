@@ -83,7 +83,6 @@ function getLinkfromUser() {
     getUsersLink(); 
     const closeLinkModal = document.querySelector('.close-link-modal');
     closeLinkModal.addEventListener('click', () => {
-        console.log('körs detta dirr?')
         linkModal.classList.add('display-none');
     });
     const addLinkBtn = document.getElementById('add-links-btn');
@@ -95,7 +94,6 @@ function getLinkfromUser() {
 
 // render user input and creates link template, enabels user to remove link
 function createLink(UsersLinkName, UsersLinkUrl) {
-    console.log('start creatLink')
     const linkUl = document.querySelector('.link-ul');
     createNewElemAndClass('li', null, linkUl, 'flex');
     createNewElemAndClass('a', null, linkUl.lastElementChild);
@@ -158,14 +156,12 @@ async function checkUserInputs() {
 
 // saves users added links to localStorage
 function saveUsersLink(UsersLinkName, UsersLinkUrl) {
-    console.log('start saveUsersLink')
     linkInfos.push({"linkName": UsersLinkName, "linkUrl": UsersLinkUrl});
     localStorage.setItem('linkInfo', JSON.stringify(linkInfos));
 };
 
 // gets users links from localStorage
 function getUsersLink() {
-    console.log('start getUsersLink')
     const checkValues = JSON.parse(localStorage.getItem('linkInfo') || 'null');
     if (checkValues === null) return;
     linkInfos = checkValues;
@@ -176,7 +172,6 @@ function getUsersLink() {
 
 // removes users links from localStorage
 function removeUsersLink(e) {
-    console.log('start removeUsersLink');
     const urlToRemove = e.target.parentNode.firstElementChild.getAttribute('href'); // url
     let linksFromLocalStorages = JSON.parse(localStorage.getItem('linkInfo'));
     linksFromLocalStorages = linksFromLocalStorages.filter(link => {
@@ -188,6 +183,7 @@ function removeUsersLink(e) {
     })
 }
 
-// -------------------------------------------------------
-// ------------- Links LocalStorage handling -------------
-// -------------------------------------------------------
+// --------------------------------------------------------
+// ------------------ Todays weather API ------------------
+// --------------------------------------------------------
+
