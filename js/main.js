@@ -5,13 +5,13 @@ const linksContainer = document.querySelector('.links-container');
 // global varibles
 let linkInfos = [];
 
-document.addEventListener("DOMContentLoaded", addFunctionality);
+//document.addEventListener("DOMContentLoaded", addFunctionality);
 
 // runs sites main functionality
 function addFunctionality() {
     showClock();
     showDate();
-    // setInterval(showClock, 1000); /* stoped clock */
+    setInterval(showClock, 1000);
     getCustomHeader();
     changeHeader();
     getLinkfromUser();
@@ -80,7 +80,7 @@ const submitLink = document.getElementById('link-submit-btn');
 
 // enables save link functionallity
 function getLinkfromUser() {
-    getUsersLink(); 
+    getUsersLink();
     const closeLinkModal = document.querySelector('.close-link-modal');
     closeLinkModal.addEventListener('click', () => {
         linkModal.classList.add('display-none');
@@ -156,7 +156,7 @@ async function checkUserInputs() {
 
 // saves users added links to localStorage
 function saveUsersLink(UsersLinkName, UsersLinkUrl) {
-    linkInfos.push({"linkName": UsersLinkName, "linkUrl": UsersLinkUrl});
+    linkInfos.push({ "linkName": UsersLinkName, "linkUrl": UsersLinkUrl });
     localStorage.setItem('linkInfo', JSON.stringify(linkInfos));
 };
 
@@ -196,13 +196,48 @@ Extra utmaning: Gör så att användaren kan anpassa orten som visas
 */
 
 
+enablesGeoLocation(); // tillfällig
+
+function enablesGeoLocation() {
+    const testGeoBtn = document.getElementById('test-geo');
+    testGeoBtn.addEventListener('click', () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            getWeatherForcast(position.coords.latitude, position.coords.longitude);
+        });
+    });
+}
+
+
+async function getWeatherForcast(lat, lon) {
+    const apikey = '4b5aeb9659d9492f8a161902231312';
+    let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apikey}&q=${lat},${lon}&days=3`);
+    if (response.ok) {
+        console.log('got json');
+        response = await response.json();
+        console.log(response);
+        renderWeatherData(response);
+    } else {
+        console.log('something went wrong with json fetch');
+    };
+}
+
+function renderWeatherData(weatherObj) {
+    const dayContainer = document.querySelectorAll('.day-container');
+    console.log(dayContainer);
+
+}
+
+
+
+
+
 
 // --------------------------------------------------------
 // ---------------------- Your choies ---------------------
 // --------------------------------------------------------
 
 /*
-Denna del får du fritt bestämma vad den ska innehålla. 
+Denna del får du fritt bestämma vad den ska innehålla.
 Det ska dock vara data från ett externt API och exempelvis kan det vara senaste nyheterna eller aktiekurser.
 */
 
@@ -211,8 +246,8 @@ Det ska dock vara data från ett externt API och exempelvis kan det vara senaste
 // --------------------------------------------------------
 
 /*
-I den här delen ska användaren kunna skriva snabba anteckningar. 
-Tänk en stor textarea bara där det som skrivs sparas hela tiden. 
+I den här delen ska användaren kunna skriva snabba anteckningar.
+Tänk en stor textarea bara där det som skrivs sparas hela tiden.
 Det ska inte finnas flera olika anteckningar utan bara just en yta.
 */
 
