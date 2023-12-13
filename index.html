@@ -10,6 +10,7 @@
 </head>
 
 <body class="flex">
+    <!-- clock -->
     <header>
         <ul id="time-and-date" class="flex">
             <li>tid</li>
@@ -17,28 +18,63 @@
         </ul>
     </header>
     <main class="flex">
+        <!-- header -->
         <div class="hover">
             <h1 class="header">Jens Dashboard</h1>
             <input type="text" id="header-input" class="hover display-none">
         </div>
         <div class="gadgets-container flex">
+            <!-- links -->
             <div class="gadgets links-container flex">
                 <h2>Links</h2>
                 <ul class="link-ul flex">
                 </ul>
                 <button class="hover" id="add-links-btn">Add link</button>
             </div>
-            <div class="gadgets">
+            <!-- weather -->
+            <div class="gadgets weather-container flex">
                 <h2>Todays weather</h2>
+                <div class="day-container flex">
+                    <img src="" alt="">
+                    <div>
+                        <h3>Today</h3>
+                        <div class="flex weather-text-container">
+                            <p>-4</p>
+                            <p>snow</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="day-container flex">
+                    <img src="" alt="">
+                    <div>
+                        <h3>Tomorrow</h3>
+                        <div class="flex weather-text-container">
+                            <p>+1</p>
+                            <p>rain</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="day-container flex">
+                    <img src="" alt="">
+                    <div>
+                        <h3>Friday</h3>
+                        <div class="flex weather-text-container">
+                            <p>-2</p>
+                            <p>Sun</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- your choies -->
             <div class="gadgets">
                 <h2>Your choies</h2>
             </div>
+            <!-- notes -->
             <div class="gadgets">
                 <h2>Notes</h2>
             </div>
         </div>
-        <!-- modal -->
+        <!-- modal for links-->
         <div class="link-modal flex display-none">
             <i class="close-link-modal hover">&times;</i>
             <h3>Add a link</h3>
@@ -51,6 +87,7 @@
         </div>
     </main>
     <footer>
+        <!-- randomize bg image -->
         <p>slumpa ny bakgrund</p>
     </footer>
     <!-- script -->

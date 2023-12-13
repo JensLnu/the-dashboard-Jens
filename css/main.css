@@ -52,6 +52,8 @@ main {
     position: relative;
 }
 
+/* header functionality */
+
 h1,
 #header-input {
     margin: 1rem;
@@ -67,6 +69,8 @@ h1,
     padding: 1rem;
 }
 
+/* main gadgets style */
+
 .gadgets-container {
     gap: 1rem;
 }
@@ -79,6 +83,8 @@ h1,
     border-radius: 1rem;
     padding: 1rem;
 }
+
+/* link gadgets */
 
 .links-container {
     flex-direction: column;
@@ -146,9 +152,41 @@ button {
     padding: 0.2rem;
 }
 
+/* weather gadgets */
+
+.weather-container {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.day-container {
+    border: 2px solid black;/* tillfällig */
+    border-radius: 0.4rem;
+    padding: 0.4rem;
+}
+
+.day-container img {/* tillfällig */
+    background-color: #6b6c78;
+    height: 50px;
+    width: 50px;
+    margin-right: 0.4rem;
+}
+
+.weather-text-container {
+    gap: 1rem;
+}
+
+.weather-text-container p {
+    background-color: #6b6c78; /*tillfällig*/
+    border-radius: 0.4rem;
+    padding: 0.1rem 0.3rem;
+}
+
 footer p {
     /* tillfällig */
     border: 2px solid black;
     padding: 0.2rem 2rem;
     border-radius: 1rem;
 }
+
+
