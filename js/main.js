@@ -1,9 +1,8 @@
 // references
 const header = document.querySelector('.header');
-const linksContainer = document.querySelector('.links-container');
 
 // global varibles
-let linkInfos = [];
+let linkInfos = []; // saves links to localStorage
 
 //document.addEventListener("DOMContentLoaded", addFunctionality);
 
@@ -15,6 +14,7 @@ function addFunctionality() {
     getCustomHeader();
     changeHeader();
     getLinkfromUser();
+    enablesGeoLocation();
 }
 
 // -------------------------------------------------------
@@ -26,6 +26,7 @@ function showClock() {
     const timePlaceholder = document.querySelector('#time-and-date li');
     const date = new Date;
     timePlaceholder.textContent = date.toLocaleTimeString();
+    if (timePlaceholder.textContent === '00:00:00') showDate();
 }
 
 // gets the date and renders it
@@ -188,16 +189,10 @@ function removeUsersLink(e) {
 // --------------------------------------------------------
 
 /*
-Här ska vädret i närtid visas. 
-Denna behöver inte se ut exakt som i skissen men det ska vara data som hämtas från något öppet API. 
-För att avgöra vilken stad vädret ska visas för ska browserns geolocation-api användas.
-    
-Extra utmaning: Gör så att användaren kan anpassa orten som visas
+Extra utmaning: Gör så att användaren kan anpassa orten som visas (och antal dagar som visas)
 */
 
-
-enablesGeoLocation(); // tillfällig
-
+// get users browser geo location
 function enablesGeoLocation() {
     const testGeoBtn = document.getElementById('test-geo');
     testGeoBtn.addEventListener('click', () => {
@@ -207,30 +202,43 @@ function enablesGeoLocation() {
     });
 }
 
-
+// fetch weather data
 async function getWeatherForcast(lat, lon) {
     const apikey = '4b5aeb9659d9492f8a161902231312';
     let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apikey}&q=${lat},${lon}&days=3`);
     if (response.ok) {
-        console.log('got json');
         response = await response.json();
-        console.log(response);
         renderWeatherData(response);
     } else {
         console.log('something went wrong with json fetch');
     };
 }
 
+// render weather data for each day
 function renderWeatherData(weatherObj) {
-    const dayContainer = document.querySelectorAll('.day-container');
-    console.log(dayContainer);
-
+    const dayContainers = document.querySelectorAll('.day-container');
+    const townName = document.getElementById('town-name');
+    townName.textContent = `${weatherObj.location.name}`; // town name
+    for (let i = 0; i < dayContainers.length; i++) {
+        dayContainers[i].querySelector('img').src = weatherObj.forecast.forecastday[i].day.condition.icon; // img.src url   
+        dayContainers[i].querySelector('img').alt = weatherObj.forecast.forecastday[i].day.condition.text; // img.alt weather text
+        dayContainers[i].querySelector('.weather-text-container').firstElementChild.textContent =
+        weatherObj.forecast.forecastday[i].day.avgtemp_c; // avg temp
+        dayContainers[i].querySelector('.weather-text-container').lastElementChild.textContent = 
+        weatherObj.forecast.forecastday[i].day.condition.text; // weather text 
+        if (i > 1) {
+            dayContainers[i].querySelector('h3').textContent = getWeekdayName(weatherObj.forecast.forecastday[i].date); // day name
+        } 
+    }
 }
 
-
-
-
-
+// return the name of a day from a specific date
+function getWeekdayName(date){
+    const fulldate = new Date(date);
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let weekday = weekdays[fulldate.getDay()];
+    return weekday;
+}
 
 // --------------------------------------------------------
 // ---------------------- Your choies ---------------------
