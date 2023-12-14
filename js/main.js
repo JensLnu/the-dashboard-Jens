@@ -189,7 +189,8 @@ function removeUsersLink(e) {
 // --------------------------------------------------------
 
 /*
-Extra utmaning: Gör så att användaren kan anpassa orten som visas (och antal dagar som visas)
+Extra utmaning: Gör så att användaren kan anpassa orten som visas (och antal dagar som visas).
+(lägg till en senast updaterad datum).
 */
 
 // get users browser geo location
