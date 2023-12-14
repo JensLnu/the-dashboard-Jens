@@ -4,7 +4,7 @@ const header = document.querySelector('.header');
 // global varibles
 let linkInfos = []; // saves links to localStorage
 
-//document.addEventListener("DOMContentLoaded", addFunctionality);
+document.addEventListener("DOMContentLoaded", addFunctionality);
 
 // runs sites main functionality
 function addFunctionality() {
@@ -16,6 +16,7 @@ function addFunctionality() {
     getLinkfromUser();
     enablesGeoLocation();
     enableRandomizeBgBtn();
+    getNotesAndSave();
 }
 
 // -------------------------------------------------------
@@ -255,11 +256,15 @@ Det ska dock vara data från ett externt API och exempelvis kan det vara senaste
 // ------------------------- Notes ------------------------
 // --------------------------------------------------------
 
-/*
-I den här delen ska användaren kunna skriva snabba anteckningar.
-Tänk en stor textarea bara där det som skrivs sparas hela tiden.
-Det ska inte finnas flera olika anteckningar utan bara just en yta.
-*/
+// get saved note from localStorage and saves new
+function getNotesAndSave() {
+    const noteTextarea = document.getElementById('note-textarea');
+    const savedNotes = localStorage.getItem('notes');
+    noteTextarea.value = savedNotes;
+    noteTextarea.addEventListener('blur', () => {
+        localStorage.setItem('notes', noteTextarea.value);
+    });
+}
 
 // --------------------------------------------------------
 // -------------- Randomize background image --------------
