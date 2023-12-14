@@ -188,9 +188,14 @@ button {
     padding: 0.1rem 0.3rem;
 }
 
-/* footer {
-    margin-top: auto;
-} */
+/* note gadget */
+
+#note-textarea {
+    min-height: 80%;
+    width: 100%;
+    padding: 3%;
+    color: red; /* tillfällig */
+}
 
 footer p {
     /* tillfällig */
