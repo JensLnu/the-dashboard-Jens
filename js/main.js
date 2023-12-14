@@ -15,6 +15,7 @@ function addFunctionality() {
     changeHeader();
     getLinkfromUser();
     enablesGeoLocation();
+    enableRandomizeBgBtn();
 }
 
 // -------------------------------------------------------
@@ -224,17 +225,17 @@ function renderWeatherData(weatherObj) {
         dayContainers[i].querySelector('img').src = weatherObj.forecast.forecastday[i].day.condition.icon; // img.src url   
         dayContainers[i].querySelector('img').alt = weatherObj.forecast.forecastday[i].day.condition.text; // img.alt weather text
         dayContainers[i].querySelector('.weather-text-container').firstElementChild.textContent =
-        weatherObj.forecast.forecastday[i].day.avgtemp_c; // avg temp
-        dayContainers[i].querySelector('.weather-text-container').lastElementChild.textContent = 
-        weatherObj.forecast.forecastday[i].day.condition.text; // weather text 
+            weatherObj.forecast.forecastday[i].day.avgtemp_c; // avg temp
+        dayContainers[i].querySelector('.weather-text-container').lastElementChild.textContent =
+            weatherObj.forecast.forecastday[i].day.condition.text; // weather text 
         if (i > 1) {
             dayContainers[i].querySelector('h3').textContent = getWeekdayName(weatherObj.forecast.forecastday[i].date); // day name
-        } 
+        }
     }
 }
 
 // return the name of a day from a specific date
-function getWeekdayName(date){
+function getWeekdayName(date) {
     const fulldate = new Date(date);
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let weekday = weekdays[fulldate.getDay()];
@@ -265,20 +266,37 @@ Det ska inte finnas flera olika anteckningar utan bara just en yta.
 // --------------------------------------------------------
 
 /*
-När användaren klickar på denna knapp ska en randomiserad bild från Unsplash API hämtas och läggas in som bakgrund på dashboarden.
-    
 Extra utmaning: Låt användaren fylla i ett sökord som används för att hitta en randomiserad bild så att det blir inom ett tema som användaren önskar.
 */
 
+function enableRandomizeBgBtn() {
+    randomizeBgBtn = document.getElementById('randomize-bg-btn');
+    randomizeBgBtn.addEventListener('click', setBg);
+}
+
+async function setBg() {
+    const imgUrl = await getBgImg();
+    // console.log(imgUrl);
+    document.body.style.backgroundImage = `url('${imgUrl.urls.regular}')`
+}
+
+async function getBgImg() {
+    //const unsplashApplicationId = 54078;
+    const unsplashAccessKey = 'HkKu-cGTTO9SDxD4IGSkio9JwaFL5TuMcI9gSU4UOYQ';
+    //const unsplashSecretKey = '-BaS8HwFjGZPe0Lfv59F7E3-4nVQ3s0xB4EPhQHCOMM';
+    const response = await fetch(`https://api.unsplash.com/photos/random?client_id=${unsplashAccessKey}`);
+    if (response.ok) {
+        return response.json();
+    } else {
+        console.log(response)
+    }
+}
 
 /*
 **VG-fråga**
 
-Denna del behöver du bara göra om du satsar på VG.
-
 I din readme-fil på github ska du ha med ett resonemang kring din kod. I denna ska du nyanserat resonera kring styrkor och brister i ditt genomförandet, alltså i den kod du utvecklat.
 
-VG-nivån bedöms genom kvalitén på koden i kombination med din förmåga att se just styrkor och brister i den. Detta betyder att om din kod har allt för låg kvalité räcker det inte med resonemang kring det för att rädda upp, men det betyder också att ingen kod behöver vara helt perfekt men det är bra att du själv kan peka på de brister du då ser.
+VG-nivån bedöms genom kvalitén på koden i kombination med din förmåga att se just styrkor och brister i den.
 
-</aside>
 */

@@ -9,6 +9,10 @@
     --main--bg--color: #343541;
 }
 
+html, body {
+    height: 100%;
+}
+
 /* global classes start */
 
 .flex {
@@ -28,13 +32,16 @@
 /* global classes end */
 
 body {
-    min-height: 90vh;
+    background-image: url();
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-position: center; */
     color: var(--text--color);
     background-color: var(--main--bg--color);
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem;
+    padding: 1rem;
 }
 
 #time-and-date {
@@ -180,6 +187,10 @@ button {
     border-radius: 0.4rem;
     padding: 0.1rem 0.3rem;
 }
+
+/* footer {
+    margin-top: auto;
+} */
 
 footer p {
     /* tillfällig */
