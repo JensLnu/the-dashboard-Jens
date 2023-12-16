@@ -251,7 +251,38 @@ function getWeekdayName(date) {
 Det ska dock vara data från ett externt API och exempelvis kan det vara senaste nyheterna eller aktiekurser.
 */
 
-async function getExchangeRates(currency){
+const exchangeAmount = document.getElementById('Exchange-amount');
+const fromContry = document.getElementById('Fromcountries');
+const toContry = document.getElementById('toCountries');
+
+function buildExchangeFunctionalyity() {
+    const calculateRateBtn = document.getElementById('calculate-rate-btn');
+    currencies.forEach(obj => {
+        createNewOption(`${obj.country}, ${obj.code}`, fromContry);
+        createNewOption(`${obj.country}, ${obj.code}`, toContry);
+    });
+    calculateRateBtn.addEventListener('click', validateExchangeInput);
+}
+
+// checks users input for exchange rates
+function validateExchangeInput() {
+    const onlyNumberReg = /^\d+$/;
+    if (onlyNumberReg.test(exchangeAmount.value)) exchangeAmount.classList.remove('required-field');
+    else exchangeAmount.classList.add('required-field');
+    if (fromContry.value) fromContry.classList.remove('required-field');
+    else fromContry.classList.add('required-field');
+    if (toContry.value) toContry.classList.remove('required-field');
+    else toContry.classList.add('required-field');
+    if (onlyNumberReg.test(exchangeAmount.value) && fromContry.value && toContry.value) {
+        const fromCurrencyCode = fromContry.value.split(', ');
+        console.log(fromCurrencyCode[1])
+        //getExchangeRates(fromCurrencyCode[1]);
+    } 
+}
+
+
+
+async function getExchangeRates(currency) {
     const apikey = 'dc058b70680f82e26cbe4a8a';
     let response = await fetch(`https://v6.exchangerate-api.com/v6/${apikey}/latest/${currency}`);
     if (response.ok) {
@@ -270,12 +301,14 @@ async function later() {
 }
 
 
-async function buildExchangeFunctionalyity() {
-    const fromContry = document.getElementById('Fromcountries');
-    const toContry = document.getElementById('toCountries');
-    const ExchangeAmount = document.getElementById('Exchange-amount');
 
+function renderChosenExchange() {
+    const renderExchange = document.getElementById('render-exchange');
+
+    renderExchange.textContent = `${exchangeAmount} ${currencies[124].name} is `;
 }
+// { code: "SEK", name: "Swedish Krona", country: "Sweden" }
+
 buildExchangeFunctionalyity();
 
 
