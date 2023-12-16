@@ -248,9 +248,42 @@ function getWeekdayName(date) {
 // --------------------------------------------------------
 
 /*
-Denna del får du fritt bestämma vad den ska innehålla.
 Det ska dock vara data från ett externt API och exempelvis kan det vara senaste nyheterna eller aktiekurser.
 */
+
+async function getExchangeRates(currency){
+    const apikey = 'dc058b70680f82e26cbe4a8a';
+    let response = await fetch(`https://v6.exchangerate-api.com/v6/${apikey}/latest/${currency}`);
+    if (response.ok) {
+        response = await response.json();
+        return response;
+    } else {
+        console.log('Something went wrong with API fetch!');
+        console.log(response);
+    }
+}
+
+async function later() {
+    let currency = 'SEK'
+    const ExchangeObj = await getExchangeRates(currency);
+    console.log(ExchangeObj);
+}
+
+
+async function buildExchangeFunctionalyity() {
+    const fromContry = document.getElementById('Fromcountries');
+    const toContry = document.getElementById('toCountries');
+    const ExchangeAmount = document.getElementById('Exchange-amount');
+
+}
+buildExchangeFunctionalyity();
+
+
+function createNewOption(content, appendTo) {
+    const newElem = document.createElement('option');
+    newElem.textContent = content;
+    appendTo.appendChild(newElem);
+}
 
 // --------------------------------------------------------
 // ------------------------- Notes ------------------------

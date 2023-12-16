@@ -69,7 +69,25 @@
             </div>
             <!-- your choies -->
             <div class="gadgets">
-                <h2>Your choies</h2>
+                <h2>Exchange Rates</h2>
+                <div>
+                    <div class="flex">
+                        <label for="Fromcountries">From</label>
+                        <select id="Fromcountries" name="Fromcountries">
+                            <option value="" selected>Contry..</option>
+                        </select>
+                    </div>
+                    <div class="flex">
+                        <label for="toCountries">To</label>
+                        <select id="toCountries" name="toCountries">
+                            <option value="" selected>Contry..</option>
+                        </select>
+                    </div>
+                    <div class="flex">
+                        <label for="">Amount</label>
+                        <input  id="Exchange-amount" type="text">
+                    </div>
+                </div>
             </div>
             <!-- notes -->
             <div class="gadgets">
@@ -94,6 +112,7 @@
         <button id="randomize-bg-btn">slumpa ny bakgrund</button>
     </footer>
     <!-- script -->
+    <script src="js/currencies.js"></script>
     <script src="js/main.js"></script>
 </body>
 
