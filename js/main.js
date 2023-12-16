@@ -1,5 +1,8 @@
 // references
 const header = document.querySelector('.header');
+const amountToExchangeInput = document.getElementById('Exchange-amount');
+const fromContryInput = document.getElementById('Fromcountries');
+const toContryInput = document.getElementById('toCountries');
 
 // global varibles
 let linkInfos = []; // saves links to localStorage
@@ -17,11 +20,12 @@ function addFunctionality() {
     enablesGeoLocation();
     enableRandomizeBgBtn();
     getNotesAndSave();
+    buildExchangeFunctionalyity();
 }
 
-// -------------------------------------------------------
-// -------------------- Time and date --------------------
-// -------------------------------------------------------
+// --------------------------------------------------------
+// ------------------- 1. Time and date -------------------
+// --------------------------------------------------------
 
 // gets the time and render it
 function showClock() {
@@ -42,9 +46,9 @@ function showDate() {
     datePlaceholder.textContent = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-// ---------------------------------------------------------
-// -------------------- Changing header --------------------
-// ---------------------------------------------------------
+// ----------------------------------------------------------
+// ------------------- 2. Changing header -------------------
+// ----------------------------------------------------------
 
 // enabel the main header to be changed by the user
 function changeHeader() {
@@ -72,9 +76,9 @@ function getCustomHeader() {
     if (customHeader) header.textContent = customHeader;
 }
 
-// ------------------------------------------------------
-// -------------------- Adding links --------------------
-// ------------------------------------------------------
+// -------------------------------------------------------
+// ------------------- 3. Adding links -------------------
+// -------------------------------------------------------
 
 // Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
 
@@ -153,9 +157,9 @@ async function checkUserInputs() {
     }
 }
 
-// -------------------------------------------------------
-// ------------- Links LocalStorage handling -------------
-// -------------------------------------------------------
+// --------------------------------------------------------
+// ------------ 3. Links LocalStorage handling ------------
+// --------------------------------------------------------
 
 // saves users added links to localStorage
 function saveUsersLink(UsersLinkName, UsersLinkUrl) {
@@ -186,9 +190,9 @@ function removeUsersLink(e) {
     })
 }
 
-// --------------------------------------------------------
-// ------------------ Todays weather API ------------------
-// --------------------------------------------------------
+// ---------------------------------------------------------
+// ----------------- 4. Todays weather API -----------------
+// ---------------------------------------------------------
 
 /*
 Extra utmaning: Gör så att användaren kan anpassa orten som visas (och antal dagar som visas).
@@ -243,84 +247,75 @@ function getWeekdayName(date) {
     return weekday;
 }
 
-// --------------------------------------------------------
-// ---------------------- Your choies ---------------------
-// --------------------------------------------------------
-
-/*
-Det ska dock vara data från ett externt API och exempelvis kan det vara senaste nyheterna eller aktiekurser.
-*/
-
-const exchangeAmount = document.getElementById('Exchange-amount');
-const fromContry = document.getElementById('Fromcountries');
-const toContry = document.getElementById('toCountries');
+// ---------------------------------------------------------
+// -------------- 5. Your choies Exchange Rates-------------
+// ---------------------------------------------------------
 
 function buildExchangeFunctionalyity() {
     const calculateRateBtn = document.getElementById('calculate-rate-btn');
     currencies.forEach(obj => {
-        createNewOption(`${obj.country}, ${obj.code}`, fromContry);
-        createNewOption(`${obj.country}, ${obj.code}`, toContry);
+        createNewElemAndClass('option', `${obj.country}, ${obj.code}`, fromContryInput);
+        createNewElemAndClass('option', `${obj.country}, ${obj.code}`, toContryInput);
     });
-    calculateRateBtn.addEventListener('click', validateExchangeInput);
+    calculateRateBtn.addEventListener('click', validateExchangeInputs);
 }
 
 // checks users input for exchange rates
-function validateExchangeInput() {
+function validateExchangeInputs() {
+    const validateInputField = (inputField, condition) => {
+        if (condition) {
+            inputField.classList.remove('required-field');
+            return true;
+        } else {
+            inputField.classList.add('required-field');
+            return false;
+        }
+    };
+
     const onlyNumberReg = /^\d+$/;
-    if (onlyNumberReg.test(exchangeAmount.value)) exchangeAmount.classList.remove('required-field');
-    else exchangeAmount.classList.add('required-field');
-    if (fromContry.value) fromContry.classList.remove('required-field');
-    else fromContry.classList.add('required-field');
-    if (toContry.value) toContry.classList.remove('required-field');
-    else toContry.classList.add('required-field');
-    if (onlyNumberReg.test(exchangeAmount.value) && fromContry.value && toContry.value) {
-        const fromCurrencyCode = fromContry.value.split(', ');
-        console.log(fromCurrencyCode[1])
-        //getExchangeRates(fromCurrencyCode[1]);
-    } 
+    const isValidAmount = validateInputField(amountToExchangeInput, onlyNumberReg.test(amountToExchangeInput.value));
+    const isValidFromCountry = validateInputField(fromContryInput, fromContryInput.value);
+    const isValidToCountry = validateInputField(toContryInput, toContryInput.value);
+
+    if (isValidAmount && isValidFromCountry && isValidToCountry) getExchangeRates();
 }
 
-
-
-async function getExchangeRates(currency) {
+// gets exchange rates
+async function getExchangeRates() {
     const apikey = 'dc058b70680f82e26cbe4a8a';
-    let response = await fetch(`https://v6.exchangerate-api.com/v6/${apikey}/latest/${currency}`);
+    const fromCurrencyCode = fromContryInput.value.split(', ')[1];
+    let response = await fetch(`https://v6.exchangerate-api.com/v6/${apikey}/latest/${fromCurrencyCode}`);
     if (response.ok) {
         response = await response.json();
-        return response;
+        renderCurrenciesExchangeRate(response, fromCurrencyCode);
     } else {
         console.log('Something went wrong with API fetch!');
         console.log(response);
     }
 }
 
-async function later() {
-    let currency = 'SEK'
-    const ExchangeObj = await getExchangeRates(currency);
-    console.log(ExchangeObj);
-}
-
-
-
-function renderChosenExchange() {
+// displays choosed currencies exchange rate
+function renderCurrenciesExchangeRate(currencyObj, fromCurrencyCode) {
     const renderExchange = document.getElementById('render-exchange');
+    const toCurrencyCode = toContryInput.value.split(', ')[1];
+    const fromCurrencyName = getCurrencyName(fromCurrencyCode);
+    const toCurrencyName = getCurrencyName(toCurrencyCode);
 
-    renderExchange.textContent = `${exchangeAmount} ${currencies[124].name} is `;
-}
-// { code: "SEK", name: "Swedish Krona", country: "Sweden" }
-
-buildExchangeFunctionalyity();
-
-
-function createNewOption(content, appendTo) {
-    const newElem = document.createElement('option');
-    newElem.textContent = content;
-    appendTo.appendChild(newElem);
+    renderExchange.textContent = `${amountToExchangeInput.value} "${fromCurrencyName.name}"
+     is ${currencyObj.conversion_rates[toCurrencyCode] * amountToExchangeInput.value}
+     in "${toCurrencyName.name}"`;
 }
 
-// --------------------------------------------------------
-// ------------------------- Notes ------------------------
-// --------------------------------------------------------
+// gets currency name
+function getCurrencyName(currencyCode){
+    return currencies.find(currency => {
+        if (currency.code === currencyCode) return currency.name;
+    });
+}
+
+// ---------------------------------------------------------
+// ------------------------ 6.  Notes ----------------------
+// ---------------------------------------------------------
 
 // get saved note from localStorage and saves new
 function getNotesAndSave() {
@@ -332,9 +327,9 @@ function getNotesAndSave() {
     });
 }
 
-// --------------------------------------------------------
-// -------------- Randomize background image --------------
-// --------------------------------------------------------
+// ---------------------------------------------------------
+// ------------- 7. Randomize background image -------------
+// ---------------------------------------------------------
 
 /*
 Extra utmaning: Låt användaren fylla i ett sökord som används för att hitta en randomiserad bild så att det blir inom ett tema som användaren önskar.
@@ -366,8 +361,7 @@ async function getBgImg() {
 /*
 **VG-fråga**
 
-I din readme-fil på github ska du ha med ett resonemang kring din kod. I denna ska du nyanserat resonera kring styrkor och brister i ditt genomförandet, alltså i den kod du utvecklat.
+I din readme-fil på github ska du ha med ett resonemang kring din kod. I denna ska du nyanserat resonera kring styrkor och brister i ditt genomförandet, i din kod.
 
 VG-nivån bedöms genom kvalitén på koden i kombination med din förmåga att se just styrkor och brister i den.
-
 */
