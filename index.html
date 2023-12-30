@@ -12,7 +12,7 @@
 <body class="flex">
     <!-- clock -->
     <header>
-        <ul id="time-and-date" class="flex">
+        <ul id="time-and-date" class="flex bg-color">
             <li>tid</li>
             <li>datum</li>
         </ul>
@@ -23,44 +23,44 @@
             <h1 class="header">Jens Dashboard</h1>
             <input type="text" id="header-input" class="hover display-none">
         </div>
-        <div class="gadgets-container flex">
+        <div class="gadgets-container">
             <!-- links -->
-            <div class="gadgets links-container flex">
+            <div class="gadgets links-container flex bg-color">
                 <h2>Links</h2>
                 <ul class="link-ul flex">
                 </ul>
                 <button class="hover" id="add-links-btn">Add link</button>
             </div>
             <!-- weather -->
-            <div class="gadgets weather-container flex">
+            <div class="gadgets weather-container flex bg-color">
                 <h2 id="town-name">Todays weather</h2>
                 <div class="day-container flex">
-                    <img src="" alt="">
+                    <img src="./img/placeholder50x50.jpg" alt="placeholder">
                     <div>
                         <h3>Today</h3>
                         <div class="flex weather-text-container">
-                            <p>-4</p>
-                            <p>snow</p>
+                            <p>temp</p>
+                            <p>weather</p>
                         </div>
                     </div>
                 </div>
                 <div class="day-container flex">
-                    <img src="" alt="">
+                    <img src=".//img/placeholder50x50.jpg" alt="placeholder">
                     <div>
                         <h3>Tomorrow</h3>
                         <div class="flex weather-text-container">
-                            <p>+1</p>
-                            <p>rain</p>
+                            <p>temp</p>
+                            <p>weather</p>
                         </div>
                     </div>
                 </div>
                 <div class="day-container flex">
-                    <img src="" alt="">
+                    <img src=".//img/placeholder50x50.jpg" alt="placeholder">
                     <div>
-                        <h3>Friday</h3>
+                        <h3>After Tomorrow</h3>
                         <div class="flex weather-text-container">
-                            <p>-2</p>
-                            <p>Sun</p>
+                            <p>temp</p>
+                            <p>weather</p>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 <button id="test-geo">get weather</button>
             </div>
             <!-- your choies -->
-            <div class="gadgets">
+            <div class="gadgets bg-color flex exchange-container">
                 <h2>Exchange Rates</h2>
                 <div class="">
                     <label for="Fromcountries">From</label>
@@ -82,18 +82,22 @@
                         <option value="" selected>Contry..</option>
                     </select>
                 </div>
-                <div class="">
+                <div class="flex style-amount">
                     <label for="">Amount</label>
                     <input id="Exchange-amount" type="text" placeholder="amount..">
                 </div>
-                <button id="calculate-rate-btn">Calculate rate</button>
                 <p id="render-exchange"></p>
+                <button id="calculate-rate-btn">Calculate rate</button>
             </div>
             <!-- notes -->
-            <div class="gadgets">
+            <div class="gadgets flex bg-color notes-container">
                 <h2>Notes</h2>
                 <textarea id="note-textarea" placeholder="click and type something.."></textarea>
             </div>
+        </div>
+        <div class="randomize-bg-image">
+            <!-- randomize bg image -->
+            <button id="randomize-bg-btn">slumpa ny bakgrund</button>
         </div>
         <!-- modal for links-->
         <div class="link-modal flex display-none">
@@ -107,10 +111,6 @@
             <button class="hover" id="link-submit-btn">Submit link</button>
         </div>
     </main>
-    <footer>
-        <!-- randomize bg image -->
-        <button id="randomize-bg-btn">slumpa ny bakgrund</button>
-    </footer>
     <!-- script -->
     <script src="js/currencies.js"></script>
     <script src="js/main.js"></script>
