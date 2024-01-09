@@ -103,7 +103,7 @@ h1,
 
 .gadgets {
     height: 350px;
-    min-width: 300px;
+    width: 300px;
     border-radius: 1rem;
     padding: 1rem;
     flex-direction: column;
