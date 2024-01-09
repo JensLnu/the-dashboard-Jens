@@ -95,13 +95,15 @@ h1,
 
 .gadgets-container {
     width: 90vw;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
 }
 
 .gadgets {
     height: 350px;
+    min-width: 300px;
     border-radius: 1rem;
     padding: 1rem;
     flex-direction: column;
