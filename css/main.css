@@ -139,6 +139,11 @@ h1,
     height: 100%;
 }
 
+.link-ul img {
+    height: 30px;
+    width: 30px;
+}
+
 .close-tag {
     align-self: start;
     margin-left: auto;

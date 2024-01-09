@@ -1,8 +1,10 @@
 // references
-const header = document.querySelector('.header');
-const amountToExchangeInput = document.getElementById('Exchange-amount');
-const fromContryInput = document.getElementById('Fromcountries');
-const toContryInput = document.getElementById('toCountries');
+const header = document.querySelector('.header');                           // changing header funktion
+const linkModal = document.querySelector('.link-modal');                    // Links gadget
+const submitLink = document.getElementById('link-submit-btn');              // Links gadget
+const amountToExchangeInput = document.getElementById('Exchange-amount');   // Exchange gadget
+const fromContryInput = document.getElementById('Fromcountries');           // Exchange gadget
+const toContryInput = document.getElementById('toCountries');               // Exchange gadget
 
 // global varibles
 let linkInfos = []; // saves links to localStorage
@@ -80,11 +82,6 @@ function getCustomHeader() {
 // ------------------- 3. Adding links -------------------
 // -------------------------------------------------------
 
-// Extra utmaning: Hämta länkens favicon och visa som bild i dashboarden.
-
-const linkModal = document.querySelector('.link-modal');
-const submitLink = document.getElementById('link-submit-btn');
-
 // enables save link functionallity
 function getLinkfromUser() {
     getUsersLink();
@@ -104,7 +101,7 @@ function createLink(UsersLinkName, UsersLinkUrl) {
     const linkUl = document.querySelector('.link-ul');
     createNewElemAndClass('li', null, linkUl, 'flex');
     createNewElemAndClass('a', null, linkUl.lastElementChild);
-    createNewElemAndClass('i', 'img', linkUl.lastElementChild);
+    linkUl.lastElementChild.appendChild(getFavIcon(UsersLinkUrl));
     createNewElemAndClass('p', UsersLinkName, linkUl.lastElementChild);
     createNewElemAndClass('i', '', linkUl.lastElementChild, 'close-tag', 'hover');
     linkUl.lastElementChild.querySelector('.close-tag').innerHTML = '&times;'; // only for not using innerHTML from an input field
@@ -126,6 +123,17 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
     if (className1 !== undefined) newElem.classList.add(className1);
     if (className2 !== undefined) newElem.classList.add(className2);
     appendTo.appendChild(newElem);
+}
+
+//get favicon and creates img-elem for it
+function getFavIcon(UsersLinkUrl) {
+    const imgElem = document.createElement('img');
+    imgElem.src =`${UsersLinkUrl}/favicon.ico`;
+    imgElem.alt = 'favicon';
+    imgElem.addEventListener('error', () => {
+        imgElem.src = '../img/placeholder50x50.jpg';
+    });
+    return imgElem;
 }
 
 // control of userers input for valid url and resets inputfields
@@ -307,7 +315,7 @@ function renderCurrenciesExchangeRate(currencyObj, fromCurrencyCode) {
 }
 
 // gets currency name
-function getCurrencyName(currencyCode){
+function getCurrencyName(currencyCode) {
     return currencies.find(currency => {
         if (currency.code === currencyCode) return currency.name;
     });
