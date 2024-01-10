@@ -27,7 +27,7 @@ function addFunctionality() {
     getLinkfromUser();
     enablesUserToChooseTown();
     enablesGeoLocation();
-    enableRandomizeBgBtn();
+    chooseRandomizeBgTheme();
     getNotesAndSave();
     buildExchangeFunctionalyity();
 }
@@ -135,7 +135,7 @@ function createNewElemAndClass(elem, content, appendTo, className1, className2) 
 //get favicon and creates img-elem for it
 function getFavIcon(UsersLinkUrl) {
     const imgElem = document.createElement('img');
-    imgElem.src =`${UsersLinkUrl}/favicon.ico`;
+    imgElem.src = `${UsersLinkUrl}/favicon.ico`;
     imgElem.alt = 'favicon';
     imgElem.addEventListener('error', () => {
         imgElem.src = '../img/placeholder50x50.jpg';
@@ -235,7 +235,7 @@ async function getTownGeoLocation(e) {
         const choosedTown = weatherInput.value.toLowerCase();
         townName.textContent = choosedTown.charAt(0).toUpperCase() + choosedTown.slice(1);
         townName.classList.toggle('display-none');
-        weatherInput.classList.toggle('display-none');   
+        weatherInput.classList.toggle('display-none');
         let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${choosedTown}&days=3`);
         if (response.ok) {
             response = await response.json();
@@ -379,30 +379,27 @@ function getNotesAndSave() {
 // ------------- 7. Randomize background image -------------
 // ---------------------------------------------------------
 
-/*
-Extra utmaning: Låt användaren fylla i ett sökord som används för att hitta en randomiserad bild så att det blir inom ett tema som användaren önskar.
-*/
-
-function enableRandomizeBgBtn() {
-    randomizeBgBtn = document.getElementById('randomize-bg-btn');
-    randomizeBgBtn.addEventListener('click', setBg);
+// choose bg theme when user press 'enter' on bg input feild
+function chooseRandomizeBgTheme() {
+    const randomizeBgInput = document.querySelector('.randomize-bg-input');
+    randomizeBgInput.addEventListener('keydown', (e) => {
+        if (e.keyCode == 13) {
+            randomizeBgInput.blur();
+            getBgImg(randomizeBgInput.value)
+            randomizeBgInput.value = '';
+        }
+    });
 }
 
-async function setBg() {
-    const imgUrl = await getBgImg();
-    // console.log(imgUrl);
-    document.body.style.backgroundImage = `url('${imgUrl.urls.regular}')`
-}
-
-async function getBgImg() {
-    //const unsplashApplicationId = 54078;
+// fetch image and render bg image
+async function getBgImg(theme) {
     const unsplashAccessKey = 'HkKu-cGTTO9SDxD4IGSkio9JwaFL5TuMcI9gSU4UOYQ';
-    //const unsplashSecretKey = '-BaS8HwFjGZPe0Lfv59F7E3-4nVQ3s0xB4EPhQHCOMM';
-    const response = await fetch(`https://api.unsplash.com/photos/random?client_id=${unsplashAccessKey}`);
+    const response = await fetch(`https://api.unsplash.com/photos/random?query=${theme}&client_id=${unsplashAccessKey}`);
     if (response.ok) {
-        return response.json();
+        const imgUrl = await response.json();
+        document.body.style.backgroundImage = `url('${imgUrl.urls.regular}')`;
     } else {
-        console.log(response)
+        console.log('could not get image from unsplash api, response: ', response);
     }
 }
 
