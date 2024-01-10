@@ -8,6 +8,7 @@ const toContryInput = document.getElementById('toCountries');               // E
 
 // global varibles
 let linkInfos = []; // saves links to localStorage
+const weatherApiKey = '4b5aeb9659d9492f8a161902231312';
 
 document.addEventListener("DOMContentLoaded", addFunctionality);
 
@@ -19,6 +20,7 @@ function addFunctionality() {
     getCustomHeader();
     changeHeader();
     getLinkfromUser();
+    enablesUserToChooseTown();
     enablesGeoLocation();
     enableRandomizeBgBtn();
     getNotesAndSave();
@@ -202,10 +204,8 @@ function removeUsersLink(e) {
 // ----------------- 4. Todays weather API -----------------
 // ---------------------------------------------------------
 
-/*
-Extra utmaning: Gör så att användaren kan anpassa orten som visas (och antal dagar som visas).
-(lägg till en senast updaterad datum).
-*/
+const townName = document.getElementById('town-name');
+const weatherInput = document.getElementById('weather-input');
 
 // get users browser geo location
 function enablesGeoLocation() {
@@ -217,10 +217,51 @@ function enablesGeoLocation() {
     });
 }
 
+// makes it possible to choose which town to render weather from
+function enablesUserToChooseTown() {
+    townName.addEventListener('click', () => {
+        townName.classList.toggle('display-none');
+        weatherInput.classList.toggle('display-none');
+        weatherInput.focus();
+        weatherInput.addEventListener('keydown', getTownGeoLocation);
+    });
+}
+
+// get towns geo location and render choosed town as header
+async function getTownGeoLocation(e) {
+    if (e.keyCode == 13) {
+        const choosedTown = weatherInput.value.toLowerCase();
+        townName.textContent = choosedTown.charAt(0).toUpperCase() + choosedTown.slice(1);
+        townName.classList.toggle('display-none');
+        weatherInput.classList.toggle('display-none');   
+        let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${choosedTown}&days=3`);
+        if (response.ok) {
+            response = await response.json();
+            weatherInput.value = '';
+            getWeatherForcast(response.location.lat, response.location.lon);
+        } else {
+            console.log('didnt found town');
+            townName.textContent = 'didnt found town';
+            resetWeaterData();
+        };
+    }
+}
+
+// if geo location is not found, resets renderd weather
+function resetWeaterData() {
+    const dayContainers = document.querySelectorAll('.day-container');
+    for (let i = 0; i < dayContainers.length; i++) {
+        dayContainers[i].querySelector('img').src = '../img/placeholder50x50.jpg';
+        dayContainers[i].querySelector('img').alt = 'placeholder img';
+        dayContainers[i].querySelector('.weather-text-container').firstElementChild.textContent = 'temp';
+        dayContainers[i].querySelector('.weather-text-container').lastElementChild.textContent = 'weather';
+        weatherInput.value = '';
+    }
+}
+
 // fetch weather data
 async function getWeatherForcast(lat, lon) {
-    const apikey = '4b5aeb9659d9492f8a161902231312';
-    let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apikey}&q=${lat},${lon}&days=3`);
+    let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=3`);
     if (response.ok) {
         response = await response.json();
         renderWeatherData(response);
@@ -232,7 +273,7 @@ async function getWeatherForcast(lat, lon) {
 // render weather data for each day
 function renderWeatherData(weatherObj) {
     const dayContainers = document.querySelectorAll('.day-container');
-    const townName = document.getElementById('town-name');
+    // const townName = document.getElementById('town-name');
     townName.textContent = `${weatherObj.location.name}`; // town name
     for (let i = 0; i < dayContainers.length; i++) {
         dayContainers[i].querySelector('img').src = weatherObj.forecast.forecastday[i].day.condition.icon; // img.src url   

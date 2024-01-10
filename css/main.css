@@ -182,6 +182,13 @@ button {
 
 /* weather gadgets */
 
+#weather-input {
+    background-color: var(--main--bg--color);
+    color: var(--text--color);
+    font-size: 1.3rem;
+    text-align: center;
+}
+
 .day-container {
     background-color: var(--main--bg--color);
     border-radius: 0.4rem;

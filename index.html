@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="icon" href="#" type="imgae/x-icon"> <!-- removes this error in konsol (GET http://127.0.0.1:5501/favicon.ico) -->
 </head>
 
 <body class="flex">
@@ -33,7 +34,8 @@
             </div>
             <!-- weather -->
             <div class="gadgets weather-container flex bg-color">
-                <h2 id="town-name">Todays weather</h2>
+                <h2 id="town-name" class="hover">Todays weather</h2>
+                <input type="text" id="weather-input" class="hover display-none">
                 <div class="day-container flex">
                     <img src="./img/placeholder50x50.jpg" alt="placeholder">
                     <div>
