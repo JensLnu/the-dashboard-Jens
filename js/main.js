@@ -2,6 +2,11 @@
 const header = document.querySelector('.header');                           // changing header funktion
 const linkModal = document.querySelector('.link-modal');                    // Links gadget
 const submitLink = document.getElementById('link-submit-btn');              // Links gadget
+
+const townName = document.getElementById('town-name');                      // weather gadget
+const weatherInput = document.getElementById('weather-input');              // weather gadget
+const dayContainers = document.querySelectorAll('.day-container');          // weather gadget
+
 const amountToExchangeInput = document.getElementById('Exchange-amount');   // Exchange gadget
 const fromContryInput = document.getElementById('Fromcountries');           // Exchange gadget
 const toContryInput = document.getElementById('toCountries');               // Exchange gadget
@@ -204,9 +209,6 @@ function removeUsersLink(e) {
 // ----------------- 4. Todays weather API -----------------
 // ---------------------------------------------------------
 
-const townName = document.getElementById('town-name');
-const weatherInput = document.getElementById('weather-input');
-
 // get users browser geo location
 function enablesGeoLocation() {
     const testGeoBtn = document.getElementById('test-geo');
@@ -249,7 +251,6 @@ async function getTownGeoLocation(e) {
 
 // if geo location is not found, resets renderd weather
 function resetWeaterData() {
-    const dayContainers = document.querySelectorAll('.day-container');
     for (let i = 0; i < dayContainers.length; i++) {
         dayContainers[i].querySelector('img').src = '../img/placeholder50x50.jpg';
         dayContainers[i].querySelector('img').alt = 'placeholder img';
@@ -272,8 +273,6 @@ async function getWeatherForcast(lat, lon) {
 
 // render weather data for each day
 function renderWeatherData(weatherObj) {
-    const dayContainers = document.querySelectorAll('.day-container');
-    // const townName = document.getElementById('town-name');
     townName.textContent = `${weatherObj.location.name}`; // town name
     for (let i = 0; i < dayContainers.length; i++) {
         dayContainers[i].querySelector('img').src = weatherObj.forecast.forecastday[i].day.condition.icon; // img.src url   
