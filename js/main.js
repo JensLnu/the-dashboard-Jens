@@ -262,7 +262,7 @@ function resetWeaterData() {
 
 // fetch weather data
 async function getWeatherForcast(lat, lon) {
-    let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=3`);
+    let response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=3`);
     if (response.ok) {
         response = await response.json();
         renderWeatherData(response);
