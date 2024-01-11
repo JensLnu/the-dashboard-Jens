@@ -22,3 +22,5 @@ Har försökt att hålla funktionerna korta vilket är en styrka men i några fa
 Hade kunnat läsa in de olika dagarna för vädret dynamiskt med JS då innehållet ändå läses in och strukturen ser likadana ut, för att minska lite HTML kod.
 
 Skulle kunna gömma mina apinycklar med en gitignore fil men inte hunnit kika på de ännu.
+
+får denna varningen i konsolen som jag inte riktigt blir av med "Tom sträng skickad till getElementById(). LoginManager.shared.mjs:40:22". Även error i konsolen då användaren matat in en länk som webbsidan inte lyckas hämta faviconen till men då kommer det en placeholder image istället. Ett error till kommer om användaren försöker hämta vädret på en stad som api inte känner till men då kommer det upp en text som säger "town not found.." och det går att försöka igen.
