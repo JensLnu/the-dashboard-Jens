@@ -402,11 +402,3 @@ async function getBgImg(theme) {
         console.log('could not get image from unsplash api, response: ', response);
     }
 }
-
-/*
-**VG-fråga**
-
-I din readme-fil på github ska du ha med ett resonemang kring din kod. I denna ska du nyanserat resonera kring styrkor och brister i ditt genomförandet, i din kod.
-
-VG-nivån bedöms genom kvalitén på koden i kombination med din förmåga att se just styrkor och brister i den.
-*/

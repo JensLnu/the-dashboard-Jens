@@ -160,7 +160,8 @@ button {
 }
 
 .link-modal {
-    background-color: var(--main--bg--color);
+    background-color: var(--text--color);
+    color: var(--main--bg--color);
     flex-direction: column;
     gap: 0.5rem;
     position: absolute;
