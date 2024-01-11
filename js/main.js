@@ -159,11 +159,11 @@ async function checkUserInputs() {
         return;
     }
     try {
-        await fetch(`http://${inputLinkUrl.value}`, { mode: 'no-cors' });
+        await fetch(`https://${inputLinkUrl.value}`, { mode: 'no-cors' });
         messageElem.textContent = 'i.e "google.com"';
         submitLink.removeEventListener('click', checkUserInputs);
-        saveUsersLink(inputLinkName.value, `http://${inputLinkUrl.value}`);
-        createLink(inputLinkName.value, `http://${inputLinkUrl.value}`);
+        saveUsersLink(inputLinkName.value, `https://${inputLinkUrl.value}`);
+        createLink(inputLinkName.value, `https://${inputLinkUrl.value}`);
         inputLinkUrl.value = '';
         inputLinkName.value = '';
     } catch (error) {
