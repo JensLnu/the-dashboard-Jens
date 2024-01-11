@@ -236,7 +236,7 @@ async function getTownGeoLocation(e) {
         townName.textContent = choosedTown.charAt(0).toUpperCase() + choosedTown.slice(1);
         townName.classList.toggle('display-none');
         weatherInput.classList.toggle('display-none');
-        let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${choosedTown}&days=3`);
+        let response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${choosedTown}&days=3`);
         if (response.ok) {
             response = await response.json();
             weatherInput.value = '';
