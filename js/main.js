@@ -15,10 +15,10 @@ const toContryInput = document.getElementById('toCountries');               // E
 let linkInfos = []; // saves links to localStorage
 const weatherApiKey = '4b5aeb9659d9492f8a161902231312';
 
-document.addEventListener("DOMContentLoaded", addFunctionality);
+document.addEventListener("DOMContentLoaded", init);
 
 // runs sites main functionality
-function addFunctionality() {
+function init() {
     showClock();
     showDate();
     setInterval(showClock, 1000);
@@ -337,8 +337,7 @@ async function getExchangeRates() {
         response = await response.json();
         renderCurrenciesExchangeRate(response, fromCurrencyCode);
     } else {
-        console.log('Something went wrong with API fetch!');
-        console.log(response);
+        console.log('Something went wrong with API fetch!', response);
     }
 }
 
